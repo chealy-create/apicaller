@@ -1,0 +1,2018 @@
+[
+    {
+        "ratioId": "market_data_share_price",
+        "metricName": "Stock Price",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Stock Price"
+    },
+    {
+        "ratioId": "market_data_total_shares_outstanding",
+        "metricName": "Total Shares Outstanding",
+        "metricFormat": "number",
+        "isCurrency": false,
+        "category": "Valuation",
+        "hasDailyData": false,
+        "formulaHuman": "Total Shares Outstanding"
+    },
+    {
+        "ratioId": "calculated_market_cap",
+        "metricName": "Market Cap",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Share Price * Total Shares Outstanding"
+    },
+    {
+        "ratioId": "calculated_tev",
+        "metricName": "Total Enterprise Value (TEV)",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Market Cap + (Short-Term Debt + Current Portion of Long-Term Debt + Current Portion of Leases + Long-Term Debt + Leases - Total Cash and Cash Equivalents) + Preferred Stock + Minority Interests"
+    },
+    {
+        "ratioId": "ratio_buyback_yield",
+        "metricName": "Buyback Yield",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "-Net Share Repurchases / Market Cap"
+    },
+    {
+        "ratioId": "ratio_debt_paydown_yield",
+        "metricName": "Debt Paydown Yield",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "(-Net ST Debt Repayment - Net LT Debt Repayment) / Market Cap"
+    },
+    {
+        "ratioId": "ratio_shareholder_yield",
+        "metricName": "Shareholder Yield",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Buyback Yield + Debt Paydown Yield + Dividend Yield"
+    },
+    {
+        "ratioId": "calculated_dividend_yield",
+        "metricName": "Dividend Yield",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "DPS / Share Price"
+    },
+    {
+        "ratioId": "ratio_price_to_sales",
+        "metricName": "P/S",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Market Cap / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_price_to_gross_profit",
+        "metricName": "P/Gross Profit",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Market Cap / Gross Profit"
+    },
+    {
+        "ratioId": "ratio_price_to_earnings",
+        "metricName": "P/E",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Share Price / Diluted EPS"
+    },
+    {
+        "ratioId": "ratio_earnings_yield",
+        "metricName": "Earnings Yield",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Diluted EPS / Share Price"
+    },
+    {
+        "ratioId": "ratio_price_to_ocf",
+        "metricName": "P/OCF",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Market Cap / Cash from Operating Activities"
+    },
+    {
+        "ratioId": "calculated_fcf",
+        "metricName": "Free Cash Flow",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Cash from Operating Activities + Purchases of Property, Plant & Equipment"
+    },
+    {
+        "ratioId": "ratio_price_to_fcf",
+        "metricName": "P/FCF",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Market Cap / Free Cash Flow"
+    },
+    {
+        "ratioId": "ratio_fcf_yield",
+        "metricName": "FCF Yield",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Free Cash Flow / Market Cap"
+    },
+    {
+        "ratioId": "ratio_price_to_book",
+        "metricName": "P/B",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Market Cap / Total Common Shareholders' Equity"
+    },
+    {
+        "ratioId": "ratio_ev_to_sales",
+        "metricName": "EV/Sales",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Total Enterprise Value (TEV) / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_ev_to_gross_profit",
+        "metricName": "EV/Gross Profit",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Total Enterprise Value (TEV) / Gross Profit"
+    },
+    {
+        "ratioId": "calculated_ebitda",
+        "metricName": "EBITDA",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Operating Profit + Depreciation & Amortization"
+    },
+    {
+        "ratioId": "ratio_ev_to_ebitda",
+        "metricName": "EV/EBITDA",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Total Enterprise Value (TEV) / EBITDA"
+    },
+    {
+        "ratioId": "ratio_ev_to_ebit",
+        "metricName": "EV/EBIT",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Total Enterprise Value (TEV) / Operating Profit"
+    },
+    {
+        "ratioId": "ratio_ev_to_ocf",
+        "metricName": "EV/OCF",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Total Enterprise Value (TEV) / Cash from Operating Activities"
+    },
+    {
+        "ratioId": "ratio_ev_to_fcf",
+        "metricName": "EV/FCF",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Trailing Valuation",
+        "hasDailyData": true,
+        "formulaHuman": "Total Enterprise Value (TEV) / Free Cash Flow"
+    },
+    {
+        "ratioId": "ratio_gross_profit_margin",
+        "metricName": "Gross Profit Margin",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Gross Profit / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_operating_margin",
+        "metricName": "Operating Margin",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Operating Profit / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_ebitda_margin",
+        "metricName": "EBITDA Margin",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "EBITDA / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_net_profit_margin",
+        "metricName": "Net Profit Margin",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Consolidated Net Income / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_effective_tax_rate",
+        "metricName": "Effective Tax Rate",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Provision for Income Taxes / Income Before Tax"
+    },
+    {
+        "ratioId": "ratio_pre_tax_profit_margin",
+        "metricName": "Pre-Tax Profit Margin",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Income Before Tax / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_fcf_margin",
+        "metricName": "Free Cash Flow Margin",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Free Cash Flow / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_ocf_to_sales",
+        "metricName": "OCF / Sales",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Cash from Operating Activities / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_ocf_to_net_income",
+        "metricName": "OCF / Net Income",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Cash from Operating Activities / Consolidated Net Income"
+    },
+    {
+        "ratioId": "ratio_fcf_to_ocf",
+        "metricName": "FCF / OCF",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Free Cash Flow / Cash from Operating Activities"
+    },
+    {
+        "ratioId": "ratio_fcf_to_net_income",
+        "metricName": "FCF / Net Income",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Free Cash Flow / Consolidated Net Income"
+    },
+    {
+        "ratioId": "ratio_fcf_to_ebitda",
+        "metricName": "FCF / EBITDA",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Margins",
+        "hasDailyData": false,
+        "formulaHuman": "Free Cash Flow / EBITDA"
+    },
+    {
+        "ratioId": "calculated_nopat",
+        "metricName": "NOPAT",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Operating Profit * (1 - (Tax Provision / Pre-Tax Income))"
+    },
+    {
+        "ratioId": "calculated_excess_cash",
+        "metricName": "Excess Cash",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "max(0, Total Current Liabilities - Total Current Assets + Cash)"
+    },
+    {
+        "ratioId": "calculated_operating_cash",
+        "metricName": "Operating Cash",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "Cash - Excess Cash"
+    },
+    {
+        "ratioId": "calculated_invested_capital",
+        "metricName": "Invested Capital",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "Total Assets - Accounts Payable - Accrued Expenses - Operating Cash"
+    },
+    {
+        "ratioId": "calculated_average_invested_capital",
+        "metricName": "Average Invested Capital",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Invested Capital + Invested Capital (PY)) / 2"
+    },
+    {
+        "ratioId": "calculated_average_total_assets",
+        "metricName": "Average Total Assets",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Assets (t) + Total Assets (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_average_total_equity",
+        "metricName": "Average Total Equity",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Equity (t) + Total Equity (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_total_capital",
+        "metricName": "Total Capital",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "ST Debt + Current Portion of LT Debt + Current Portion of Leases + LT Debt + Leases + Preferred Stock + Common Stock + Minority Interest"
+    },
+    {
+        "ratioId": "calculated_average_total_capital",
+        "metricName": "Average Total Capital",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Capital (t) + Total Capital (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_capital_employed",
+        "metricName": "Capital Employed",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "Total Assets - Total Current Liabilities"
+    },
+    {
+        "ratioId": "calculated_average_capital_employed",
+        "metricName": "Average Capital Employed",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Capital Employed (t) + Capital Employed (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_tangible_assets",
+        "metricName": "Tangible Assets",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "Total Assets - Net Intangibles - Goodwill"
+    },
+    {
+        "ratioId": "calculated_average_tangible_assets",
+        "metricName": "Average Tangible Assets",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Tangible Assets (t) + Tangible Assets (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_average_receivables",
+        "metricName": "Average Receivables",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Receivables (t) + Receivables (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_average_payables",
+        "metricName": "Average Payables",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Payables (t) + Payables (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_average_inventory",
+        "metricName": "Average Inventory",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Inventory (t) + Inventory (t-1)) / 2"
+    },
+    {
+        "ratioId": "calculated_average_fixed_assets",
+        "metricName": "Average Fixed Assets",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Net PPE (t) + Net PPE (t-1)) / 2"
+    },
+    {
+        "ratioId": "ratio_return_on_invested_capital",
+        "metricName": "Return on Invested Capital",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "NOPAT / Average Invested Capital"
+    },
+    {
+        "ratioId": "ratio_return_on_assets",
+        "metricName": "Return on Assets",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "NOPAT / Average Total Assets"
+    },
+    {
+        "ratioId": "ratio_return_on_equity",
+        "metricName": "Return on Equity",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Net Income / Average Total Equity"
+    },
+    {
+        "ratioId": "ratio_return_on_total_capital",
+        "metricName": "Return on Total Capital",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "NOPAT / Average Total Capital"
+    },
+    {
+        "ratioId": "ratio_return_on_capital_employed",
+        "metricName": "Return on Capital Employed",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Operating Profit / Average Capital Employed"
+    },
+    {
+        "ratioId": "ratio_return_on_tangible_assets",
+        "metricName": "Return on Tangible Assets",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Net Income / Average Tangible Assets"
+    },
+    {
+        "ratioId": "ratio_receivables_turnover",
+        "metricName": "Receivables Turnover",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Total Revenues / Average Receivables"
+    },
+    {
+        "ratioId": "ratio_dso",
+        "metricName": "Days Sales Outstanding",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "365 / Receivables Turnover"
+    },
+    {
+        "ratioId": "ratio_payables_turnover",
+        "metricName": "Payables Turnover",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Cost of Sales / Average Payables"
+    },
+    {
+        "ratioId": "ratio_dpo",
+        "metricName": "Days Payables Outstanding",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "365 / Payables Turnover"
+    },
+    {
+        "ratioId": "ratio_inventory_turnover",
+        "metricName": "Inventory Turnover",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Cost of Sales / Average Inventory"
+    },
+    {
+        "ratioId": "ratio_dio",
+        "metricName": "Days Inventory Outstanding",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "365 / Inventory Turnover"
+    },
+    {
+        "ratioId": "ratio_cash_conversion_cycle",
+        "metricName": "Cash Conversion Cycle",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "DIO + DSO - DPO"
+    },
+    {
+        "ratioId": "ratio_asset_turnover",
+        "metricName": "Asset Turnover",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Total Revenues / Average Total Assets"
+    },
+    {
+        "ratioId": "ratio_fixed_asset_turnover",
+        "metricName": "Fixed Asset Turnover",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "Total Revenues / Average Fixed Assets"
+    },
+    {
+        "ratioId": "ratio_operating_cycle",
+        "metricName": "Operating Cycle",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "DIO + DSO"
+    },
+    {
+        "ratioId": "ratio_capex_to_ocf",
+        "metricName": "CapEx to OCF",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "-Purchases of PPE / OCF"
+    },
+    {
+        "ratioId": "ratio_capex_to_revenue",
+        "metricName": "CapEx to Revenue",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "-Purchases of PPE / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_capex_to_depreciation",
+        "metricName": "CapEx to Depreciation",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Capital Efficiency",
+        "hasDailyData": false,
+        "formulaHuman": "-Purchases of PPE / D&A"
+    },
+    {
+        "ratioId": "calculated_total_debt",
+        "metricName": "Total Debt",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Short-Term Debt + Current Portion of Long-Term Debt + Current Portion of Leases + Long-Term Debt + Leases"
+    },
+    {
+        "ratioId": "calculated_net_debt",
+        "metricName": "Net Debt",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Debt - Total Cash and Cash Equivalents"
+    },
+    {
+        "ratioId": "ratio_current_ratio",
+        "metricName": "Current Ratio",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Current Assets / Total Current Liabilities"
+    },
+    {
+        "ratioId": "ratio_quick_ratio",
+        "metricName": "Quick Ratio",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Cash and Cash Equivalents + Total Trade Receivables) / Total Current Liabilities"
+    },
+    {
+        "ratioId": "ratio_cash_ratio",
+        "metricName": "Cash Ratio",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Cash and Cash Equivalents / Total Current Liabilities"
+    },
+    {
+        "ratioId": "ratio_debt_ratio",
+        "metricName": "Debt Ratio",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Debt / Total Assets"
+    },
+    {
+        "ratioId": "ratio_assets_to_equity",
+        "metricName": "Assets to Equity",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Assets / Total Shareholders' Equity"
+    },
+    {
+        "ratioId": "ratio_cash_flow_to_debt_ratio",
+        "metricName": "Cash Flow to Debt Ratio",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Cash from Operating Activities / Total Debt"
+    },
+    {
+        "ratioId": "ratio_long_term_debt_to_assets",
+        "metricName": "Long-term Debt to Assets",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "(Long-Term Debt + Leases) / Total Assets"
+    },
+    {
+        "ratioId": "ratio_intangibles_to_total_assets",
+        "metricName": "Intangibles to Total Assets",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "(Net Intangible Assets + Goodwill) / Total Assets"
+    },
+    {
+        "ratioId": "calculated_net_current_asset_value",
+        "metricName": "Net Current Asset Value",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Current Assets - Total Liabilities - Minority Interests and Other - Preferred Stock"
+    },
+    {
+        "ratioId": "ratio_goodwill_to_assets",
+        "metricName": "Goodwill / Assets",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Goodwill / Total Assets"
+    },
+    {
+        "ratioId": "ratio_debt_to_equity",
+        "metricName": "Debt / Equity",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Debt / Total Shareholders' Equity"
+    },
+    {
+        "ratioId": "ratio_total_debt_to_capitalization",
+        "metricName": "Total Debt / Capitalization",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Total Debt / (Total Debt + Preferred Stock + Common Stock + Minority Interest)"
+    },
+    {
+        "ratioId": "ratio_long_term_debt_to_capitalization",
+        "metricName": "Long Term Debt / Capitalization",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Long-Term Debt / (Total Debt + Preferred Stock + Common Stock + Minority Interest)"
+    },
+    {
+        "ratioId": "ratio_long_term_debt_to_equity",
+        "metricName": "Long-Term Debt / Equity",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Long-Term Debt / Total Shareholders' Equity"
+    },
+    {
+        "ratioId": "ratio_net_debt_to_ebitda",
+        "metricName": "Net Debt / EBITDA",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Net Debt / EBITDA"
+    },
+    {
+        "ratioId": "ratio_ebit_to_interest_expense",
+        "metricName": "EBIT / Interest Expense",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "Operating Profit / Interest Expense"
+    },
+    {
+        "ratioId": "ratio_ebitda_to_interest_expense",
+        "metricName": "EBITDA / Interest Expense",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "EBITDA / Interest Expense"
+    },
+    {
+        "ratioId": "ratio_ebitda_minus_capex_to_interest_expense",
+        "metricName": "(EBITDA - Capex) / Interest Expense",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Financial Health",
+        "hasDailyData": false,
+        "formulaHuman": "(EBITDA + Capex) / Interest Expense"
+    },
+    {
+        "ratioId": "ratio_revenue_per_share",
+        "metricName": "Revenue per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Total Revenues / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_basic_eps",
+        "metricName": "Basic EPS",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Basic EPS"
+    },
+    {
+        "ratioId": "ratio_diluted_eps",
+        "metricName": "Diluted EPS",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Diluted EPS"
+    },
+    {
+        "ratioId": "ratio_book_value_per_share",
+        "metricName": "Book Value per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Total Common Shareholders' Equity / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_tangible_book_value_per_share",
+        "metricName": "Tangible Book Value per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Common Shareholders' Equity - Net Intangible Assets - Goodwill) / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_cash_per_share",
+        "metricName": "Cash per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Total Cash and Cash Equivalents / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_operating_cash_flow_per_share",
+        "metricName": "Operating Cash Flow per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Cash from Operating Activities / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_free_cash_flow_per_share",
+        "metricName": "Free Cash Flow per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "(Cash from Operating Activities + Purchases of Property, Plant & Equipment) / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_capex_per_share",
+        "metricName": "CapEx per Share",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "-Purchases of Property, Plant & Equipment / Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "company_data_total_employees",
+        "metricName": "Total Employees",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Employees",
+        "hasDailyData": false,
+        "formulaHuman": null
+    },
+    {
+        "ratioId": "calculated_average_total_employees",
+        "metricName": "Average Total Employees",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Employees (t) + Total Employees (t-1)) / 2"
+    },
+    {
+        "ratioId": "ratio_rd_to_revenue",
+        "metricName": "R&D to Revenue",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Common Size",
+        "hasDailyData": false,
+        "formulaHuman": "Research & Development Expenses / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_sga_to_revenue",
+        "metricName": "SG&A to Revenue",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Common Size",
+        "hasDailyData": false,
+        "formulaHuman": "Selling, General & Administrative Expenses / Total Revenues"
+    },
+    {
+        "ratioId": "ratio_sbc_to_revenue",
+        "metricName": "Stock-based Comp to Revenue",
+        "metricFormat": "ratio",
+        "isCurrency": false,
+        "category": "Common Size",
+        "hasDailyData": false,
+        "formulaHuman": "Share-Based Compensation Expense / Total Revenues"
+    },
+    {
+        "ratioId": "calculated_dividends_per_share",
+        "metricName": "DPS",
+        "metricFormat": "ratio",
+        "isCurrency": true,
+        "category": "Dividends",
+        "hasDailyData": false,
+        "formulaHuman": "-Common Share Dividends Paid / Basic Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_payout_ratio",
+        "metricName": "Payout Ratio",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Dividends",
+        "hasDailyData": false,
+        "formulaHuman": "-Common Share Dividends Paid / Net Income Attributable to Common Shareholders"
+    },
+    {
+        "ratioId": "calculated_change_in_working_capital",
+        "metricName": "Change in Working Capital",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Intermediate",
+        "hasDailyData": false,
+        "formulaHuman": "Changes in Inventories + Changes in Accounts Payable + Changes in Accrued Expenses + Changes in Income Taxes Payable + Changes in Unearned Revenue + Changes in Other Operating Activities + Changes in Trading Assets + Changes in Restricted Cash and Segregated Assets + Changes in Securities Borrowed + Changes in Accrued Interest and Accounts Receivable + Changes in Securities Loaned + Changes in Trading Liabilities + Changes in Reinsurance Contract Assets + Changes in Deferred Acquisition Costs + Changes in Other Liabilities + Changes in Other Assets + Changes in Unearned Premiums"
+    },
+    {
+        "ratioId": "calculated_levered_free_cash_flow",
+        "metricName": "Levered Free Cash Flow",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Net Income Attributable to Common Shareholders + Depreciation & Amortization + Purchases of Property, Plant & Equipment + Change in Working Capital + Net Issuance / (Repayments) of Short-Term Debt + Net Issuance / (Repayments) of Long-Term Debt"
+    },
+    {
+        "ratioId": "calculated_unlevered_free_cash_flow",
+        "metricName": "Unlevered Free Cash Flow",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "NOPAT + Depreciation & Amortization + Purchases of Property, Plant & Equipment + Change in Working Capital"
+    },
+    {
+        "ratioId": "calculated_net_change_in_cash",
+        "metricName": "Net Change in Cash",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Cash from Operating Activities + Cash from Investing Activities + Cash from Financing Activities"
+    },
+    {
+        "ratioId": "ratio_weighted_avg_shares_outstanding",
+        "metricName": "Weighted Avg. Shares Outstanding",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Basic Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "ratio_weighted_avg_shares_outstanding_dil",
+        "metricName": "Weighted Avg. Shares Outstanding Diluted",
+        "metricFormat": null,
+        "isCurrency": null,
+        "category": "Per Share",
+        "hasDailyData": false,
+        "formulaHuman": "Diluted Weighted Average Shares Outstanding"
+    },
+    {
+        "ratioId": "growth_diluted_eps_1y",
+        "metricName": "Diluted EPS 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Diluted EPS / Diluted EPS 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_eps_3y_cagr",
+        "metricName": "Diluted EPS 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Diluted EPS / Diluted EPS 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_eps_5y_cagr",
+        "metricName": "Diluted EPS 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Diluted EPS / Diluted EPS 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_eps_10y_cagr",
+        "metricName": "Diluted EPS 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Diluted EPS / Diluted EPS 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_levered_free_cash_flow_1y",
+        "metricName": "Levered Free Cash Flow 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Levered FCF / Levered FCF 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_levered_free_cash_flow_3y_cagr",
+        "metricName": "Levered Free Cash Flow 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Levered FCF / Levered FCF 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_levered_free_cash_flow_5y_cagr",
+        "metricName": "Levered Free Cash Flow 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Levered FCF / Levered FCF 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_levered_free_cash_flow_10y_cagr",
+        "metricName": "Levered Free Cash Flow 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Levered FCF / Levered FCF 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_total_equity_1y",
+        "metricName": "Total Equity 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Equity / Total Equity 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_total_equity_3y_cagr",
+        "metricName": "Total Equity 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Total Equity / Total Equity 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_total_equity_5y_cagr",
+        "metricName": "Total Equity 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Total Equity / Total Equity 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_total_equity_10y_cagr",
+        "metricName": "Total Equity 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Total Equity / Total Equity 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_accounts_receivable_1y",
+        "metricName": "Accounts Receivable 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Accounts Receivable / Accounts Receivable 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_accounts_receivable_3y_cagr",
+        "metricName": "Accounts Receivable 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Accounts Receivable / Accounts Receivable 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_accounts_receivable_5y_cagr",
+        "metricName": "Accounts Receivable 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Accounts Receivable / Accounts Receivable 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_accounts_receivable_10y_cagr",
+        "metricName": "Accounts Receivable 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Accounts Receivable / Accounts Receivable 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_inventory_1y",
+        "metricName": "Inventory 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Inventory / Inventory 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_inventory_3y_cagr",
+        "metricName": "Inventory 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Inventory / Inventory 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_inventory_5y_cagr",
+        "metricName": "Inventory 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Inventory / Inventory 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_inventory_10y_cagr",
+        "metricName": "Inventory 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Inventory / Inventory 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_tangible_book_value_1y",
+        "metricName": "Tangible Book Value 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Tangible Book Value / Tangible Book Value 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_tangible_book_value_3y_cagr",
+        "metricName": "Tangible Book Value 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Tangible Book Value / Tangible Book Value 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_tangible_book_value_5y_cagr",
+        "metricName": "Tangible Book Value 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Tangible Book Value / Tangible Book Value 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_tangible_book_value_10y_cagr",
+        "metricName": "Tangible Book Value 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Tangible Book Value / Tangible Book Value 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_unlevered_free_cash_flow_1y",
+        "metricName": "Unlevered Free Cash Flow 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Unlevered FCF / Unlevered FCF 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_unlevered_free_cash_flow_3y_cagr",
+        "metricName": "Unlevered Free Cash Flow 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Unlevered FCF / Unlevered FCF 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_unlevered_free_cash_flow_5y_cagr",
+        "metricName": "Unlevered Free Cash Flow 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Unlevered FCF / Unlevered FCF 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_unlevered_free_cash_flow_10y_cagr",
+        "metricName": "Unlevered Free Cash Flow 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Unlevered FCF / Unlevered FCF 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_revenue_1y",
+        "metricName": "Revenue 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Revenue / Revenue 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_revenue_3y_cagr",
+        "metricName": "Revenue 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Revenue / Revenue 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_revenue_5y_cagr",
+        "metricName": "Revenue 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Revenue / Revenue 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_revenue_10y_cagr",
+        "metricName": "Revenue 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Revenue / Revenue 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_gross_profit_1y",
+        "metricName": "Gross Profit 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Gross Profit / Gross Profit 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_gross_profit_3y_cagr",
+        "metricName": "Gross Profit 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Gross Profit / Gross Profit 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_gross_profit_5y_cagr",
+        "metricName": "Gross Profit 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Gross Profit / Gross Profit 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_gross_profit_10y_cagr",
+        "metricName": "Gross Profit 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Gross Profit / Gross Profit 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_ebitda_1y",
+        "metricName": "EBITDA 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(EBITDA / EBITDA 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_ebitda_3y_cagr",
+        "metricName": "EBITDA 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((EBITDA / EBITDA 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_ebitda_5y_cagr",
+        "metricName": "EBITDA 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((EBITDA / EBITDA 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_ebitda_10y_cagr",
+        "metricName": "EBITDA 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((EBITDA / EBITDA 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_ebit_1y",
+        "metricName": "EBIT 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(EBIT / EBIT 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_ebit_3y_cagr",
+        "metricName": "EBIT 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((EBIT / EBIT 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_ebit_5y_cagr",
+        "metricName": "EBIT 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((EBIT / EBIT 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_ebit_10y_cagr",
+        "metricName": "EBIT 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((EBIT / EBIT 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_earnings_from_cont_operations_1y",
+        "metricName": "Earnings From Cont. Operations 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Net Income / Net Income 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_earnings_from_cont_operations_3y_cagr",
+        "metricName": "Earnings From Cont. Operations 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Income / Net Income 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_earnings_from_cont_operations_5y_cagr",
+        "metricName": "Earnings From Cont. Operations 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Income / Net Income 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_earnings_from_cont_operations_10y_cagr",
+        "metricName": "Earnings From Cont. Operations 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Income / Net Income 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_net_income_1y",
+        "metricName": "Net Income 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Net Income / Net Income 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_net_income_3y_cagr",
+        "metricName": "Net Income 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Income / Net Income 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_net_income_5y_cagr",
+        "metricName": "Net Income 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Income / Net Income 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_net_income_10y_cagr",
+        "metricName": "Net Income 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Income / Net Income 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_plant_and_equip_1y",
+        "metricName": "Plant and Equip. 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Net PPE / Net PPE 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_plant_and_equip_3y_cagr",
+        "metricName": "Plant and Equip. 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net PPE / Net PPE 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_plant_and_equip_5y_cagr",
+        "metricName": "Plant and Equip. 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net PPE / Net PPE 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_plant_and_equip_10y_cagr",
+        "metricName": "Plant and Equip. 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net PPE / Net PPE 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_common_equity_1y",
+        "metricName": "Common Equity 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Common Equity / Common Equity 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_common_equity_3y_cagr",
+        "metricName": "Common Equity 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Common Equity / Common Equity 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_common_equity_5y_cagr",
+        "metricName": "Common Equity 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Common Equity / Common Equity 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_common_equity_10y_cagr",
+        "metricName": "Common Equity 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Common Equity / Common Equity 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_total_assets_1y",
+        "metricName": "Total Assets 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Total Assets / Total Assets 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_total_assets_3y_cagr",
+        "metricName": "Total Assets 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Total Assets / Total Assets 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_total_assets_5y_cagr",
+        "metricName": "Total Assets 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Total Assets / Total Assets 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_total_assets_10y_cagr",
+        "metricName": "Total Assets 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Total Assets / Total Assets 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_cash_from_operations_1y",
+        "metricName": "Cash From Operations 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(OCF / OCF 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_cash_from_operations_3y_cagr",
+        "metricName": "Cash From Operations 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((OCF / OCF 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_cash_from_operations_5y_cagr",
+        "metricName": "Cash From Operations 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((OCF / OCF 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_cash_from_operations_10y_cagr",
+        "metricName": "Cash From Operations 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((OCF / OCF 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_capital_expenditures_1y",
+        "metricName": "Capital Expenditures 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(CapEx / CapEx 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_capital_expenditures_3y_cagr",
+        "metricName": "Capital Expenditures 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((CapEx / CapEx 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_capital_expenditures_5y_cagr",
+        "metricName": "Capital Expenditures 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((CapEx / CapEx 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_capital_expenditures_10y_cagr",
+        "metricName": "Capital Expenditures 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((CapEx / CapEx 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_net_interest_income_1y",
+        "metricName": "Net Interest Income 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Net Interest Income / Net Interest Income 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_net_interest_income_3y_cagr",
+        "metricName": "Net Interest Income 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Interest Income / Net Interest Income 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_net_interest_income_5y_cagr",
+        "metricName": "Net Interest Income 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Interest Income / Net Interest Income 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_net_interest_income_10y_cagr",
+        "metricName": "Net Interest Income 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Interest Income / Net Interest Income 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_non_interest_income_1y",
+        "metricName": "Non Interest Income 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Non Interest Income / Non Interest Income 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_non_interest_income_3y_cagr",
+        "metricName": "Non Interest Income 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Non Interest Income / Non Interest Income 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_non_interest_income_5y_cagr",
+        "metricName": "Non Interest Income 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Non Interest Income / Non Interest Income 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_non_interest_income_10y_cagr",
+        "metricName": "Non Interest Income 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Non Interest Income / Non Interest Income 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_provision_for_loan_losses_1y",
+        "metricName": "Provision For Loan Losses 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Provision For Loan Losses / Provision For Loan Losses 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_provision_for_loan_losses_3y_cagr",
+        "metricName": "Provision For Loan Losses 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Provision For Loan Losses / Provision For Loan Losses 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_provision_for_loan_losses_5y_cagr",
+        "metricName": "Provision For Loan Losses 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Provision For Loan Losses / Provision For Loan Losses 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_provision_for_loan_losses_10y_cagr",
+        "metricName": "Provision For Loan Losses 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Provision For Loan Losses / Provision For Loan Losses 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_gross_loans_1y",
+        "metricName": "Gross Loans 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Gross Loans / Gross Loans 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_gross_loans_3y_cagr",
+        "metricName": "Gross Loans 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Gross Loans / Gross Loans 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_gross_loans_5y_cagr",
+        "metricName": "Gross Loans 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Gross Loans / Gross Loans 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_gross_loans_10y_cagr",
+        "metricName": "Gross Loans 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Gross Loans / Gross Loans 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_net_loans_1y",
+        "metricName": "Net Loans 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Net Loans / Net Loans 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_net_loans_3y_cagr",
+        "metricName": "Net Loans 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Loans / Net Loans 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_net_loans_5y_cagr",
+        "metricName": "Net Loans 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Loans / Net Loans 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_net_loans_10y_cagr",
+        "metricName": "Net Loans 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Net Loans / Net Loans 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_allowance_for_loan_losses_1y",
+        "metricName": "Allowance For Loan Losses 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Allowance For Loan Losses / Allowance For Loan Losses 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_allowance_for_loan_losses_3y_cagr",
+        "metricName": "Allowance For Loan Losses 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Allowance For Loan Losses / Allowance For Loan Losses 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_allowance_for_loan_losses_5y_cagr",
+        "metricName": "Allowance For Loan Losses 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Allowance For Loan Losses / Allowance For Loan Losses 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_allowance_for_loan_losses_10y_cagr",
+        "metricName": "Allowance For Loan Losses 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Allowance For Loan Losses / Allowance For Loan Losses 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_weighted_avg_shares_outstanding_1y",
+        "metricName": "Weighted Avg. Shares Outstanding 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Weighted Avg. Shares Outstanding / Weighted Avg. Shares Outstanding 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_weighted_avg_shares_outstanding_3y_cagr",
+        "metricName": "Weighted Avg. Shares Outstanding 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Weighted Avg. Shares Outstanding / Weighted Avg. Shares Outstanding 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_weighted_avg_shares_outstanding_5y_cagr",
+        "metricName": "Weighted Avg. Shares Outstanding 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Weighted Avg. Shares Outstanding / Weighted Avg. Shares Outstanding 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_weighted_avg_shares_outstanding_10y_cagr",
+        "metricName": "Weighted Avg. Shares Outstanding 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Weighted Avg. Shares Outstanding / Weighted Avg. Shares Outstanding 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_weighted_avg_shares_outstanding_1y",
+        "metricName": "Diluted Weighted Avg. Shares Outstanding 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(Diluted Weighted Avg. Shares Outstanding / Diluted Weighted Avg. Shares Outstanding 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_weighted_avg_shares_outstanding_3y_cagr",
+        "metricName": "Diluted Weighted Avg. Shares Outstanding 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Diluted Weighted Avg. Shares Outstanding / Diluted Weighted Avg. Shares Outstanding 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_weighted_avg_shares_outstanding_5y_cagr",
+        "metricName": "Diluted Weighted Avg. Shares Outstanding 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Diluted Weighted Avg. Shares Outstanding / Diluted Weighted Avg. Shares Outstanding 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_diluted_weighted_avg_shares_outstanding_10y_cagr",
+        "metricName": "Diluted Weighted Avg. Shares Outstanding 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((Diluted Weighted Avg. Shares Outstanding / Diluted Weighted Avg. Shares Outstanding 10Y Ago) ^ (1/10)) - 1"
+    },
+    {
+        "ratioId": "calculated_book_value",
+        "metricName": "Book Value",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Total Common Shareholders' Equity"
+    },
+    {
+        "ratioId": "calculated_tangible_book_value",
+        "metricName": "Tangible Book Value",
+        "metricFormat": "number",
+        "isCurrency": true,
+        "category": "Other",
+        "hasDailyData": false,
+        "formulaHuman": "Total Common Shareholders' Equity - Net Intangible Assets - Goodwill"
+    },
+    {
+        "ratioId": "growth_dps_1y",
+        "metricName": "DPS 1Y Growth",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "(DPS / DPS 1Y Ago) - 1"
+    },
+    {
+        "ratioId": "growth_dps_3y_cagr",
+        "metricName": "DPS 3Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((DPS / DPS 3Y Ago) ^ (1/3)) - 1"
+    },
+    {
+        "ratioId": "growth_dps_5y_cagr",
+        "metricName": "DPS 5Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((DPS / DPS 5Y Ago) ^ (1/5)) - 1"
+    },
+    {
+        "ratioId": "growth_dps_10y_cagr",
+        "metricName": "DPS 10Y CAGR",
+        "metricFormat": "%",
+        "isCurrency": false,
+        "category": "Growth",
+        "hasDailyData": false,
+        "formulaHuman": "((DPS / DPS 10Y Ago) ^ (1/10)) - 1"
+    }
+]
