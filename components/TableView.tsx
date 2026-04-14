@@ -136,8 +136,34 @@ function detectAndConvertData(data: unknown): TableData[] {
     }
   }
 
-  // Known array patterns under results
   const res = obj.results as Record<string, unknown> | undefined;
+
+  // QuoteMedia earnings estimates (v3): results.brokers[].estimates[]
+  // Unroll to one row per broker × estimate so the data is actually usable.
+  const brokers = res?.brokers;
+  if (Array.isArray(brokers) && brokers.length > 0) {
+    const firstBroker = brokers[0] as Record<string, unknown>;
+    if (Array.isArray(firstBroker.estimates)) {
+      const unrolled: Record<string, unknown>[] = [];
+      for (const b of brokers) {
+        const broker = b as Record<string, unknown>;
+        const { estimates, ...brokerInfo } = broker;
+        const estArr = Array.isArray(estimates) ? estimates : [];
+        if (estArr.length === 0) {
+          unrolled.push(brokerInfo);
+          continue;
+        }
+        for (const est of estArr) {
+          if (est && typeof est === "object") {
+            unrolled.push({ ...brokerInfo, ...(est as Record<string, unknown>) });
+          }
+        }
+      }
+      return [arrayToTable(unrolled, "Earnings Estimates")];
+    }
+  }
+
+  // Known array patterns under results
   if (res && typeof res === "object") {
     const knownKeys = ["dividends", "earningsEvents", "estimates", "earningsEstimates"];
     for (const key of knownKeys) {

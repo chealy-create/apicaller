@@ -7,12 +7,6 @@ interface FetchDataRequest {
   params: Record<string, unknown>;
 }
 
-// Helper function to encode symbols while preserving colons for QuoteMedia
-function encodeSymbolForQM(symbol: string): string {
-  // Encode everything, then decode colons back
-  return encodeURIComponent(symbol).replace(/%3A/g, ':');
-}
-
 // Validate that a param looks like a ticker/symbol (no path traversal)
 function isValidSymbol(value: string): boolean {
   return /^[A-Za-z0-9.:_\-]{1,30}$/.test(value);
@@ -96,9 +90,13 @@ async function handleQuoteMediaCall(
         );
       }
 
-      // Keep colons literal in symbol
-      const encodedSymbol = encodeSymbolForQM(symbol);
-      url = `https://quotes.quotemedia.com/v3/financials/enhanced/${encodedSymbol}/${reportType}?numberOfReports=${numberOfReports}`;
+      const queryParams = new URLSearchParams({
+        symbol,
+        report_type: reportType,
+        number_of_reports: numberOfReports,
+        webmaster_id: webmasterId,
+      });
+      url = `https://quotes.quotemedia.com/v3/financials/enhanced?${queryParams}`;
       break;
     }
 
@@ -114,18 +112,13 @@ async function handleQuoteMediaCall(
         );
       }
 
-      // Keep colons literal in symbol
-      const encodedSymbol = encodeSymbolForQM(symbol);
-      let dividendUrl = `https://app.quotemedia.com/v3/events/dividends/${encodedSymbol}`;
-
-      if (startDate || endDate) {
-        const queryParams = new URLSearchParams();
-        if (startDate) queryParams.append('startDate', startDate);
-        if (endDate) queryParams.append('endDate', endDate);
-        dividendUrl += `?${queryParams}`;
-      }
-
-      url = dividendUrl;
+      const queryParams = new URLSearchParams({
+        symbol,
+        webmaster_id: webmasterId,
+      });
+      if (startDate) queryParams.append('start_date', startDate);
+      if (endDate) queryParams.append('end_date', endDate);
+      url = `https://quotes.quotemedia.com/v3/events/dividends?${queryParams}`;
       break;
     }
 
@@ -186,9 +179,11 @@ async function handleQuoteMediaCall(
         );
       }
 
-      // Keep colons literal in symbol
-      const encodedSymbol = encodeSymbolForQM(symbol);
-      url = `https://app.quotemedia.com/v3/earnings/estimates/${encodedSymbol}`;
+      const queryParams = new URLSearchParams({
+        symbol,
+        webmaster_id: webmasterId,
+      });
+      url = `https://quotes.quotemedia.com/v3/earnings/estimates?${queryParams}`;
       break;
     }
 
