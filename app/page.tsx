@@ -9,6 +9,7 @@ import ParamForm from "@/components/ParamForm";
 import ResultTabs from "@/components/ResultTabs";
 import JsonView from "@/components/JsonView";
 import TableView from "@/components/TableView";
+import ChartView from "@/components/ChartView";
 import ExportButtons from "@/components/ExportButtons";
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
   const [paramValues, setParamValues] = useState<Record<string, string>>({});
   const [tabs, setTabs] = useState<Tab[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<"json" | "table">("table");
+  const [viewMode, setViewMode] = useState<"json" | "table" | "chart">("table");
 
   const platform = useMemo(
     () => PLATFORMS.find((p) => p.name === selectedPlatform),
@@ -33,6 +34,11 @@ export default function Home() {
     () => tabs.find((t) => t.id === activeTabId),
     [tabs, activeTabId]
   );
+
+  const activeHasChart = useMemo(() => {
+    const d = activeTab?.data;
+    return !!(d && typeof d === "object" && (d as { chartData?: unknown }).chartData);
+  }, [activeTab]);
 
   const handleSelectPlatform = (name: string) => {
     setSelectedPlatform(name);
@@ -127,6 +133,10 @@ export default function Home() {
           t.id === tabId ? { ...t, data, loading: false, httpStatus } : t
         )
       );
+
+      if (data && typeof data === "object" && (data as { chartData?: unknown }).chartData) {
+        setViewMode("chart");
+      }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
@@ -142,6 +152,14 @@ export default function Home() {
 
   const handleSelectTab = (id: string) => {
     setActiveTabId(id);
+    const tab = tabs.find((t) => t.id === id);
+    const hasChart = !!(
+      tab?.data &&
+      typeof tab.data === "object" &&
+      (tab.data as { chartData?: unknown }).chartData
+    );
+    if (hasChart) setViewMode("chart");
+    else if (viewMode === "chart") setViewMode("table");
   };
 
   const handleCloseTab = (id: string) => {
@@ -219,6 +237,18 @@ export default function Home() {
             {/* View Toggle & Export */}
             <div className="border-b border-gray-200 bg-white px-6 py-3 flex items-center gap-3">
               <div className="flex gap-2">
+                {activeHasChart && (
+                  <button
+                    onClick={() => setViewMode("chart")}
+                    className={`px-3 py-1 text-sm font-medium rounded transition-colors ${
+                      viewMode === "chart"
+                        ? "bg-blue-100 text-blue-700"
+                        : "text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    Chart
+                  </button>
+                )}
                 <button
                   onClick={() => setViewMode("json")}
                   className={`px-3 py-1 text-sm font-medium rounded transition-colors ${
@@ -309,6 +339,8 @@ export default function Home() {
                   </div>
                 ) : viewMode === "json" ? (
                   <JsonView data={activeTab.data} />
+                ) : viewMode === "chart" ? (
+                  <ChartView data={activeTab.data} />
                 ) : (
                   <TableView data={activeTab.data} />
                 )

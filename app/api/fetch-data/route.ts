@@ -514,6 +514,176 @@ async function handleFMPCall(
   }
 }
 
+interface EodRow {
+  date: string;
+  close: number;
+}
+
+async function fetchEodSeries(
+  ticker: string,
+  start: string,
+  end: string,
+  token: string
+): Promise<EodRow[]> {
+  const fullTicker = ticker.includes(".") ? ticker : `${ticker}.US`;
+  const qs = new URLSearchParams({
+    from: start,
+    to: end,
+    period: "d",
+    api_token: token,
+    fmt: "json",
+  });
+  const url = `https://eodhd.com/api/eod/${encodeURIComponent(fullTicker)}?${qs}`;
+
+  const response = await fetchWithTimeout(url, { method: "GET", timeout: 30000 });
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} for ${fullTicker}`);
+  }
+
+  const data = (await response.json()) as Array<{ date: string; close: number }>;
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error(`No data returned for ${fullTicker} between ${start} and ${end}`);
+  }
+
+  return data
+    .filter((r) => r && r.date && typeof r.close === "number")
+    .map((r) => ({ date: r.date, close: r.close }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+function yesterdayIso(): string {
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
+async function handleChartsCall(
+  callId: string,
+  params: Record<string, unknown>
+): Promise<NextResponse> {
+  const token = process.env.EODHD_API_TOKEN;
+  if (!token) {
+    return NextResponse.json(
+      { error: "EODHD API token not configured" },
+      { status: 500 }
+    );
+  }
+
+  if (callId !== "price_history_rebased") {
+    return NextResponse.json(
+      { error: `Unknown Charts callId: ${callId}` },
+      { status: 400 }
+    );
+  }
+
+  const tickersRaw = (params.tickers as string) || "";
+  const startDate = ((params.start_date as string) || "").trim();
+  const endDateInput = ((params.end_date as string) || "").trim();
+
+  const tickers = tickersRaw
+    .split(/[,\s]+/)
+    .map((t) => t.trim().toUpperCase())
+    .filter(Boolean);
+
+  if (tickers.length === 0) {
+    return NextResponse.json(
+      { error: "At least one ticker is required" },
+      { status: 400 }
+    );
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(startDate)) {
+    return NextResponse.json(
+      { error: "start_date must be YYYY-MM-DD" },
+      { status: 400 }
+    );
+  }
+  const endDate = endDateInput || yesterdayIso();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(endDate)) {
+    return NextResponse.json(
+      { error: "end_date must be YYYY-MM-DD or blank" },
+      { status: 400 }
+    );
+  }
+  if (endDate < startDate) {
+    return NextResponse.json(
+      { error: `end_date (${endDate}) is before start_date (${startDate})` },
+      { status: 400 }
+    );
+  }
+  for (const t of tickers) {
+    if (!isValidSymbol(t)) {
+      return NextResponse.json(
+        { error: `Invalid ticker: ${t}` },
+        { status: 400 }
+      );
+    }
+  }
+
+  const results = await Promise.all(
+    tickers.map(async (t) => {
+      try {
+        const rows = await fetchEodSeries(t, startDate, endDate, token);
+        return { ticker: t, rows, error: null as string | null };
+      } catch (e) {
+        return {
+          ticker: t,
+          rows: [] as EodRow[],
+          error: e instanceof Error ? e.message : "Unknown error",
+        };
+      }
+    })
+  );
+
+  const succeeded = results.filter((r) => !r.error && r.rows.length > 0);
+  const failed = results
+    .filter((r) => r.error || r.rows.length === 0)
+    .map((r) => ({ ticker: r.ticker, error: r.error || "No data" }));
+
+  if (succeeded.length === 0) {
+    return NextResponse.json(
+      {
+        error: "No data retrieved for any ticker",
+        failed,
+      },
+      { status: 502 }
+    );
+  }
+
+  // Build union of dates across all successful series
+  const dateSet = new Set<string>();
+  for (const s of succeeded) {
+    for (const r of s.rows) dateSet.add(r.date);
+  }
+  const dates = Array.from(dateSet).sort();
+
+  const raw: Record<string, (number | null)[]> = {};
+  const rebased: Record<string, (number | null)[]> = {};
+
+  for (const s of succeeded) {
+    const byDate = new Map(s.rows.map((r) => [r.date, r.close]));
+    const aligned = dates.map((d) => (byDate.has(d) ? byDate.get(d)! : null));
+
+    const firstValid = aligned.find((v) => v !== null) ?? null;
+    raw[s.ticker] = aligned;
+    rebased[s.ticker] =
+      firstValid && firstValid !== 0
+        ? aligned.map((v) => (v === null ? null : (v / firstValid) * 100))
+        : aligned;
+  }
+
+  return NextResponse.json({
+    chartData: {
+      tickers: succeeded.map((s) => s.ticker),
+      startDate,
+      endDate,
+      dates,
+      raw,
+      rebased,
+    },
+    failed,
+  });
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body: FetchDataRequest = await request.json();
@@ -540,6 +710,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       case 'FMP':
         return await handleFMPCall(callId, params);
+
+      case 'Charts':
+        return await handleChartsCall(callId, params);
 
       default:
         return NextResponse.json(

@@ -134,6 +134,33 @@ export const PLATFORMS: PlatformDef[] = [
     ],
   },
   {
+    name: "Charts",
+    calls: [
+      {
+        id: "price_history_rebased",
+        name: "Price History (Rebased to 100)",
+        desc: "Fetch daily closes for multiple tickers and rebase to 100 at the start date for relative performance comparison. Uses EODHD. Bare US tickers auto-suffixed with .US (e.g. AAPL, SPY). For non-US use SYMBOL.EXCHANGE (e.g. BP.LSE, RY.TO).",
+        params: [
+          {
+            key: "tickers",
+            label: "Tickers (comma-separated, e.g. ITA, SPY)",
+            default: "ITA, SPY",
+          },
+          {
+            key: "start_date",
+            label: "Start Date (YYYY-MM-DD)",
+            default: "2026-01-01",
+          },
+          {
+            key: "end_date",
+            label: "End Date (YYYY-MM-DD, blank = yesterday)",
+            default: "",
+          },
+        ],
+      },
+    ],
+  },
+  {
     name: "FMP",
     calls: [
       {
