@@ -30,6 +30,10 @@ function extractPartialFailures(data: unknown): PartialFailure[] {
   );
 }
 
+function formatFailures(failures: PartialFailure[]): string {
+  return failures.map((f) => `${f.ticker} (${f.error})`).join(", ");
+}
+
 export default function Home() {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const [selectedCallId, setSelectedCallId] = useState<string | null>(null);
@@ -125,9 +129,16 @@ export default function Home() {
       const httpStatus = response.status;
 
       if (!response.ok) {
-        const apiMsg = data?.error
-          || data?.results?.errors?.[0]?.message
-          || `API returned ${httpStatus}`;
+        const failures = extractPartialFailures(data);
+        const baseMsg =
+          data?.error ||
+          data?.results?.errors?.[0]?.message ||
+          `API returned ${httpStatus}`;
+        const failureMsg = failures.length > 0 ? formatFailures(failures) : "";
+        const apiMsg =
+          failureMsg && !baseMsg.includes(failureMsg)
+            ? `${baseMsg}: ${failureMsg}`
+            : baseMsg;
         setTabs((prev) =>
           prev.map((t) =>
             t.id === tabId

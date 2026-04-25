@@ -690,9 +690,14 @@ async function handleChartsCall(
     .map((r) => ({ ticker: r.ticker, error: r.error || "No data" }));
 
   if (succeeded.length === 0) {
+    const failedMessage = failed
+      .map((f) => `${f.ticker} (${f.error})`)
+      .join(", ");
     return NextResponse.json(
       {
-        error: "No data retrieved for any ticker",
+        error: failedMessage
+          ? `No data retrieved for any ticker: ${failedMessage}`
+          : "No data retrieved for any ticker",
         failed,
       },
       { status: 502 }
