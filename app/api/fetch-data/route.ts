@@ -519,11 +519,14 @@ interface EodRow {
   close: number;
 }
 
+type PriceField = "close" | "adjusted_close";
+
 async function fetchEodSeries(
   ticker: string,
   start: string,
   end: string,
-  token: string
+  token: string,
+  priceField: PriceField
 ): Promise<EodRow[]> {
   const fullTicker = ticker.includes(".") ? ticker : `${ticker}.US`;
   const qs = new URLSearchParams({
@@ -540,15 +543,56 @@ async function fetchEodSeries(
     throw new Error(`HTTP ${response.status} for ${fullTicker}`);
   }
 
-  const data = (await response.json()) as Array<{ date: string; close: number }>;
+  const data = (await response.json()) as Array<{
+    date: string;
+    close?: number;
+    adjusted_close?: number;
+  }>;
   if (!Array.isArray(data) || data.length === 0) {
     throw new Error(`No data returned for ${fullTicker} between ${start} and ${end}`);
   }
 
-  return data
-    .filter((r) => r && r.date && typeof r.close === "number")
-    .map((r) => ({ date: r.date, close: r.close }))
+  const rows = data
+    .map((r) => ({
+      date: r.date,
+      close: priceField === "adjusted_close" ? r.adjusted_close : r.close,
+    }))
+    .filter((r): r is EodRow => !!r.date && typeof r.close === "number")
     .sort((a, b) => a.date.localeCompare(b.date));
+
+  if (rows.length === 0) {
+    throw new Error(`No ${priceField} data returned for ${fullTicker}`);
+  }
+
+  return rows;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchEodSeriesWithRetry(
+  ticker: string,
+  start: string,
+  end: string,
+  token: string,
+  priceField: PriceField
+): Promise<EodRow[]> {
+  const maxAttempts = 3;
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await fetchEodSeries(ticker, start, end, token, priceField);
+    } catch (error) {
+      lastError = error;
+      if (attempt < maxAttempts) {
+        await sleep(350 * attempt);
+      }
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error("Unknown error");
 }
 
 function yesterdayIso(): string {
@@ -579,6 +623,9 @@ async function handleChartsCall(
   const tickersRaw = (params.tickers as string) || "";
   const startDate = ((params.start_date as string) || "").trim();
   const endDateInput = ((params.end_date as string) || "").trim();
+  const priceFieldInput = ((params.price_field as string) || "close").trim();
+  const priceField: PriceField =
+    priceFieldInput === "adjusted_close" ? "adjusted_close" : "close";
 
   const tickers = tickersRaw
     .split(/[,\s]+/)
@@ -619,20 +666,23 @@ async function handleChartsCall(
     }
   }
 
-  const results = await Promise.all(
-    tickers.map(async (t) => {
-      try {
-        const rows = await fetchEodSeries(t, startDate, endDate, token);
-        return { ticker: t, rows, error: null as string | null };
-      } catch (e) {
-        return {
-          ticker: t,
-          rows: [] as EodRow[],
-          error: e instanceof Error ? e.message : "Unknown error",
-        };
-      }
-    })
-  );
+  const results: Array<{
+    ticker: string;
+    rows: EodRow[];
+    error: string | null;
+  }> = [];
+  for (const t of tickers) {
+    try {
+      const rows = await fetchEodSeriesWithRetry(t, startDate, endDate, token, priceField);
+      results.push({ ticker: t, rows, error: null });
+    } catch (e) {
+      results.push({
+        ticker: t,
+        rows: [],
+        error: e instanceof Error ? e.message : "Unknown error",
+      });
+    }
+  }
 
   const succeeded = results.filter((r) => !r.error && r.rows.length > 0);
   const failed = results
@@ -676,6 +726,7 @@ async function handleChartsCall(
       tickers: succeeded.map((s) => s.ticker),
       startDate,
       endDate,
+      priceField,
       dates,
       raw,
       rebased,

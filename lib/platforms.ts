@@ -145,6 +145,7 @@ export const PLATFORMS: PlatformDef[] = [
             key: "tickers",
             label: "Tickers (comma-separated, e.g. ITA, SPY)",
             default: "ITA, SPY",
+            type: "ticker_list",
           },
           {
             key: "start_date",
@@ -155,6 +156,13 @@ export const PLATFORMS: PlatformDef[] = [
             key: "end_date",
             label: "End Date (YYYY-MM-DD, blank = yesterday)",
             default: "",
+          },
+          {
+            key: "price_field",
+            label: "Price Type",
+            default: "close",
+            type: "combo",
+            options: ["close", "adjusted_close"],
           },
         ],
       },

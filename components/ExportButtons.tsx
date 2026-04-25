@@ -13,25 +13,33 @@ interface TableData {
   rows: unknown[][];
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
+}
+
+function formatCellValue(value: unknown): unknown {
+  if (value === null || value === undefined) return null;
+  if (typeof value === "object") return JSON.stringify(value);
+  return value;
+}
+
 function detectTableData(data: unknown): TableData | null {
   if (!data || typeof data !== "object") {
     return null;
   }
 
-  const obj = data as Record<string, any>;
+  const obj = data as Record<string, unknown>;
 
   // Array of objects
   if (Array.isArray(data)) {
     if (data.length === 0) return null;
     const firstItem = data[0];
-    if (typeof firstItem === "object" && firstItem !== null) {
+    if (isRecord(firstItem)) {
       const headers = Object.keys(firstItem);
       const rows = data.map((item) =>
         headers.map((h) => {
-          const val = (item as Record<string, any>)[h];
-          if (val === null || val === undefined) return null;
-          if (typeof val === "object") return JSON.stringify(val);
-          return val;
+          if (!isRecord(item)) return null;
+          return formatCellValue(item[h]);
         })
       );
       return { headers, rows };
@@ -39,20 +47,32 @@ function detectTableData(data: unknown): TableData | null {
   }
 
   // Financial reports
-  if (obj.results?.companies?.[0]?.reports) {
-    const companies = obj.results.companies;
+  const results = isRecord(obj.results) ? obj.results : null;
+  const companies = Array.isArray(results?.companies) ? results.companies : null;
+  const firstCompany = companies?.[0];
+  const reports = isRecord(firstCompany) && Array.isArray(firstCompany.reports)
+    ? firstCompany.reports
+    : null;
+  if (companies && reports) {
     const pivoted: Record<string, Record<string, string>> = {};
 
-    companies.forEach((company: any) => {
-      company.reports?.forEach((report: any) => {
+    companies.forEach((company) => {
+      if (!isRecord(company) || !Array.isArray(company.reports)) return;
+      company.reports.forEach((report) => {
+        if (!isRecord(report)) return;
         const stmt = report.statement || "Unknown";
-        report.metrics?.forEach((metric: any) => {
+        if (!Array.isArray(report.metrics)) return;
+        report.metrics.forEach((metric) => {
+          if (!isRecord(metric)) return;
           const key = `${stmt} — ${metric.metric || ""}`;
           if (!pivoted[key]) {
             pivoted[key] = {};
           }
-          pivoted[key][report.reportDate || ""] =
-            metric.value?.toString() || "";
+          const reportDate = String(report.reportDate || "");
+          pivoted[key][reportDate] =
+            metric.value === null || metric.value === undefined
+              ? ""
+              : String(metric.value);
         });
       });
     });
@@ -72,71 +92,51 @@ function detectTableData(data: unknown): TableData | null {
   }
 
   // Dividends
-  if (obj.results?.dividends) {
-    const dividends = Array.isArray(obj.results.dividends)
-      ? obj.results.dividends
-      : [obj.results.dividends];
-    if (dividends.length > 0) {
+  if (results?.dividends) {
+    const dividends = Array.isArray(results.dividends)
+      ? results.dividends
+      : [results.dividends];
+    if (dividends.length > 0 && isRecord(dividends[0])) {
       const headers = Object.keys(dividends[0]);
-      const rows = dividends.map((d: Record<string, unknown>) =>
-        headers.map((h) => {
-          const val = d[h];
-          if (val === null || val === undefined) return null;
-          if (typeof val === "object") return JSON.stringify(val);
-          return val;
-        })
+      const rows = dividends.map((d) =>
+        headers.map((h) => (isRecord(d) ? formatCellValue(d[h]) : null))
       );
       return { headers, rows };
     }
   }
 
   // Earnings events
-  if (obj.results?.earningsEvents) {
-    const events = Array.isArray(obj.results.earningsEvents)
-      ? obj.results.earningsEvents
-      : [obj.results.earningsEvents];
-    if (events.length > 0) {
+  if (results?.earningsEvents) {
+    const events = Array.isArray(results.earningsEvents)
+      ? results.earningsEvents
+      : [results.earningsEvents];
+    if (events.length > 0 && isRecord(events[0])) {
       const headers = Object.keys(events[0]);
-      const rows = events.map((e: Record<string, unknown>) =>
-        headers.map((h) => {
-          const val = e[h];
-          if (val === null || val === undefined) return null;
-          if (typeof val === "object") return JSON.stringify(val);
-          return val;
-        })
+      const rows = events.map((e) =>
+        headers.map((h) => (isRecord(e) ? formatCellValue(e[h]) : null))
       );
       return { headers, rows };
     }
   }
 
   // Fiscal ratios
-  if (Array.isArray(obj.data) && obj.data.length > 0) {
+  if (Array.isArray(obj.data) && obj.data.length > 0 && isRecord(obj.data[0])) {
     const headers = Object.keys(obj.data[0]);
-    const rows = obj.data.map((item: Record<string, unknown>) =>
-      headers.map((h) => {
-        const val = item[h];
-        if (val === null || val === undefined) return null;
-        if (typeof val === "object") return JSON.stringify(val);
-        return val;
-      })
+    const rows = obj.data.map((item) =>
+      headers.map((h) => (isRecord(item) ? formatCellValue(item[h]) : null))
     );
     return { headers, rows };
   }
 
   // Estimates
-  if (obj.results?.estimates) {
-    const estimates = Array.isArray(obj.results.estimates)
-      ? obj.results.estimates
-      : [obj.results.estimates];
-    if (estimates.length > 0) {
+  if (results?.estimates) {
+    const estimates = Array.isArray(results.estimates)
+      ? results.estimates
+      : [results.estimates];
+    if (estimates.length > 0 && isRecord(estimates[0])) {
       const headers = Object.keys(estimates[0]);
-      const rows = estimates.map((e: Record<string, unknown>) =>
-        headers.map((h) => {
-          const val = e[h];
-          if (val === null || val === undefined) return null;
-          if (typeof val === "object") return JSON.stringify(val);
-          return val;
-        })
+      const rows = estimates.map((e) =>
+        headers.map((h) => (isRecord(e) ? formatCellValue(e[h]) : null))
       );
       return { headers, rows };
     }

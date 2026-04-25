@@ -2,7 +2,7 @@ export interface ParamDef {
   key: string;
   label: string;
   default: string;
-  type?: "entry" | "combo" | "searchable_ratio" | "searchable_exchange";
+  type?: "entry" | "combo" | "searchable_ratio" | "searchable_exchange" | "ticker_list";
   options?: string[];
 }
 

@@ -2,7 +2,7 @@
 
 import { useState, useMemo, Fragment } from "react";
 import { PLATFORMS } from "@/lib/platforms";
-import { Tab, ApiCallDef } from "@/lib/types";
+import { Tab } from "@/lib/types";
 import PlatformSelector from "@/components/PlatformSelector";
 import CallSelector from "@/components/CallSelector";
 import ParamForm from "@/components/ParamForm";
@@ -11,6 +11,24 @@ import JsonView from "@/components/JsonView";
 import TableView from "@/components/TableView";
 import ChartView from "@/components/ChartView";
 import ExportButtons from "@/components/ExportButtons";
+
+interface PartialFailure {
+  ticker: string;
+  error: string;
+}
+
+function extractPartialFailures(data: unknown): PartialFailure[] {
+  if (!data || typeof data !== "object") return [];
+  const failed = (data as { failed?: unknown }).failed;
+  if (!Array.isArray(failed)) return [];
+  return failed.filter(
+    (item): item is PartialFailure =>
+      !!item &&
+      typeof item === "object" &&
+      typeof (item as PartialFailure).ticker === "string" &&
+      typeof (item as PartialFailure).error === "string"
+  );
+}
 
 export default function Home() {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
@@ -39,6 +57,11 @@ export default function Home() {
     const d = activeTab?.data;
     return !!(d && typeof d === "object" && (d as { chartData?: unknown }).chartData);
   }, [activeTab]);
+
+  const activeFailures = useMemo(
+    () => extractPartialFailures(activeTab?.data),
+    [activeTab]
+  );
 
   const handleSelectPlatform = (name: string) => {
     setSelectedPlatform(name);
@@ -340,9 +363,22 @@ export default function Home() {
                 ) : viewMode === "json" ? (
                   <JsonView data={activeTab.data} />
                 ) : viewMode === "chart" ? (
-                  <ChartView data={activeTab.data} />
+                  <ChartView
+                    data={activeTab.data}
+                    filename={`${activeTab.platform}_${activeTab.callName}_${new Date().toISOString().split("T")[0]}`}
+                  />
                 ) : (
-                  <TableView data={activeTab.data} />
+                  <div className="flex flex-col gap-4">
+                    {activeFailures.length > 0 && (
+                      <div className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                        Partial data returned:{" "}
+                        {activeFailures
+                          .map((f) => `${f.ticker} (${f.error})`)
+                          .join(", ")}
+                      </div>
+                    )}
+                    <TableView data={activeTab.data} />
+                  </div>
                 )
               ) : null}
             </div>

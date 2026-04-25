@@ -17,6 +17,29 @@ interface RatioOption {
   description: string;
 }
 
+const TICKER_PRESETS = [
+  { label: "Indexes", value: "SPY, QQQ, IWM" },
+  { label: "Megacap Tech", value: "AAPL, MSFT, NVDA, GOOGL, AMZN, META" },
+  { label: "Defense", value: "ITA, RTX, LMT, NOC, GD" },
+  { label: "Banks", value: "JPM, BAC, WFC, C, GS, MS" },
+];
+
+function isoDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function addMonths(date: Date, months: number): Date {
+  const d = new Date(date);
+  d.setUTCMonth(d.getUTCMonth() + months);
+  return d;
+}
+
+function addYears(date: Date, years: number): Date {
+  const d = new Date(date);
+  d.setUTCFullYear(d.getUTCFullYear() + years);
+  return d;
+}
+
 export default function ParamForm({
   params,
   values,
@@ -105,6 +128,77 @@ export default function ParamForm({
               </option>
             ))}
           </datalist>
+          {ratioLoading && (
+            <p className="mt-1 text-xs text-gray-500">Loading ratios...</p>
+          )}
+        </div>
+      );
+    }
+
+    if (param.type === "ticker_list") {
+      return (
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange(param.key, e.target.value)}
+            placeholder={param.default || ""}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <div className="flex flex-wrap gap-1.5">
+            {TICKER_PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                type="button"
+                onClick={() => onChange(param.key, preset.value)}
+                className="px-2.5 py-1 rounded border border-gray-200 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50"
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (param.key === "start_date") {
+      const end = values.end_date
+        ? new Date(`${values.end_date}T00:00:00Z`)
+        : new Date();
+      const shortcuts = [
+        { label: "1M", value: isoDate(addMonths(end, -1)) },
+        { label: "3M", value: isoDate(addMonths(end, -3)) },
+        { label: "6M", value: isoDate(addMonths(end, -6)) },
+        {
+          label: "YTD",
+          value: `${end.getUTCFullYear()}-01-01`,
+        },
+        { label: "1Y", value: isoDate(addYears(end, -1)) },
+        { label: "3Y", value: isoDate(addYears(end, -3)) },
+        { label: "5Y", value: isoDate(addYears(end, -5)) },
+      ];
+
+      return (
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange(param.key, e.target.value)}
+            placeholder={param.default || ""}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <div className="flex flex-wrap gap-1.5">
+            {shortcuts.map((shortcut) => (
+              <button
+                key={shortcut.label}
+                type="button"
+                onClick={() => onChange(param.key, shortcut.value)}
+                className="px-2.5 py-1 rounded border border-gray-200 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50"
+              >
+                {shortcut.label}
+              </button>
+            ))}
+          </div>
         </div>
       );
     }
