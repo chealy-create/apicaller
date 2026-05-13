@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/.test-build
 
 # next.js
 /.next/
@@ -57,4 +58,3 @@ AGENTS.md
 #OS files
 .DS_Store
 Thumbs.db
-
