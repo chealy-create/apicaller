@@ -11,6 +11,14 @@ import JsonView from "@/components/JsonView";
 import TableView from "@/components/TableView";
 import ChartView from "@/components/ChartView";
 import ExportButtons from "@/components/ExportButtons";
+import {
+  QUOTEMEDIA_ENHANCED_FINANCIALS_BUNDLE_TYPE,
+  QUOTEMEDIA_ENHANCED_REPORT_TYPES,
+  hasQuoteMediaEnhancedReports,
+  isQuoteMediaEnhancedFinancialsBundle,
+  type QuoteMediaEnhancedFinancialsBundle,
+  type QuoteMediaEnhancedFinancialsSection,
+} from "@/lib/quotemedia";
 
 interface PartialFailure {
   ticker: string;
@@ -32,6 +40,61 @@ function extractPartialFailures(data: unknown): PartialFailure[] {
 
 function formatFailures(failures: PartialFailure[]): string {
   return failures.map((f) => `${f.ticker} (${f.error})`).join(", ");
+}
+
+function getResponseErrorMessage(data: unknown, httpStatus: number): string {
+  const responseData =
+    data && typeof data === "object"
+      ? (data as {
+          error?: string;
+          results?: { errors?: { message?: string }[] };
+        })
+      : null;
+  const failures = extractPartialFailures(data);
+  const baseMsg =
+    responseData?.error ||
+    responseData?.results?.errors?.[0]?.message ||
+    `API returned ${httpStatus}`;
+  const failureMsg = failures.length > 0 ? formatFailures(failures) : "";
+
+  return failureMsg && !baseMsg.includes(failureMsg)
+    ? `${baseMsg}: ${failureMsg}`
+    : baseMsg;
+}
+
+function EnhancedFinancialsBundleNotice({
+  bundle,
+}: {
+  bundle: QuoteMediaEnhancedFinancialsBundle;
+}) {
+  return (
+    <div className="rounded border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700">
+      <div className="flex flex-wrap gap-2">
+        {bundle.sections.map((section) => {
+          const hasReports = hasQuoteMediaEnhancedReports(section.data);
+          const text =
+            section.status === "fulfilled" && hasReports
+              ? `${section.label}: ready`
+              : `${section.label}: ${section.error || "no reports returned"}`;
+          const className =
+            section.status === "fulfilled" && hasReports
+              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+              : section.status === "failed"
+                ? "border-red-200 bg-red-50 text-red-800"
+                : "border-amber-200 bg-amber-50 text-amber-800";
+
+          return (
+            <span
+              key={section.reportType}
+              className={`rounded border px-2 py-1 ${className}`}
+            >
+              {text}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -66,6 +129,16 @@ export default function Home() {
     () => extractPartialFailures(activeTab?.data),
     [activeTab]
   );
+
+  const activeEnhancedBundle = useMemo(
+    () =>
+      isQuoteMediaEnhancedFinancialsBundle(activeTab?.data)
+        ? activeTab.data
+        : null,
+    [activeTab]
+  );
+
+  const anyLoading = tabs.some((t) => t.loading);
 
   const handleSelectPlatform = (name: string) => {
     setSelectedPlatform(name);
@@ -129,16 +202,7 @@ export default function Home() {
       const httpStatus = response.status;
 
       if (!response.ok) {
-        const failures = extractPartialFailures(data);
-        const baseMsg =
-          data?.error ||
-          data?.results?.errors?.[0]?.message ||
-          `API returned ${httpStatus}`;
-        const failureMsg = failures.length > 0 ? formatFailures(failures) : "";
-        const apiMsg =
-          failureMsg && !baseMsg.includes(failureMsg)
-            ? `${baseMsg}: ${failureMsg}`
-            : baseMsg;
+        const apiMsg = getResponseErrorMessage(data, httpStatus);
         setTabs((prev) =>
           prev.map((t) =>
             t.id === tabId
@@ -182,6 +246,165 @@ export default function Home() {
         )
       );
     }
+  };
+
+  const handleFetchAllEnhancedFinancials = async () => {
+    if (
+      selectedPlatform !== "QuoteMedia" ||
+      selectedCallId !== "qm_enhanced_financials" ||
+      !selectedCall
+    ) {
+      return;
+    }
+
+    const symbol = paramValues.symbol?.trim();
+    if (!symbol) {
+      const tabId = Date.now().toString();
+      setTabs((prev) => [
+        ...prev,
+        {
+          id: tabId,
+          label: "Enhanced Financials A/Q/H",
+          data: null,
+          platform: selectedPlatform,
+          callName: "Enhanced Financials A/Q/H",
+          callId: "qm_enhanced_financials_bundle",
+          params: { ...paramValues },
+          error: "Missing required param: symbol",
+          loading: false,
+          httpStatus: 400,
+        },
+      ]);
+      setActiveTabId(tabId);
+      return;
+    }
+
+    const tabId = Date.now().toString();
+    const baseParams = {
+      ...paramValues,
+      symbol,
+      number_of_reports: paramValues.number_of_reports || "300",
+    };
+
+    setTabs((prev) => [
+      ...prev,
+      {
+        id: tabId,
+        label: `${symbol} – Enhanced Financials A/Q/H`,
+        data: null,
+        platform: selectedPlatform,
+        callName: "Enhanced Financials A/Q/H",
+        callId: "qm_enhanced_financials_bundle",
+        params: baseParams,
+        loading: true,
+      },
+    ]);
+    setActiveTabId(tabId);
+    setViewMode("table");
+
+    const sections = await Promise.all(
+      QUOTEMEDIA_ENHANCED_REPORT_TYPES.map(async ({ code, label }) => {
+        const reqParams = { ...baseParams, report_type: code };
+
+        try {
+          const response = await fetch("/api/fetch-data", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              platformId: selectedPlatform,
+              callId: "qm_enhanced_financials",
+              params: reqParams,
+            }),
+          });
+
+          const data = await response.json();
+          const httpStatus = response.status;
+          const inlineError = data?.results?.errors?.[0]?.message;
+          const error = !response.ok
+            ? getResponseErrorMessage(data, httpStatus)
+            : inlineError;
+
+          if (error) {
+            return {
+              reportType: code,
+              label,
+              status: code === "H" ? "skipped" : "failed",
+              data,
+              params: reqParams,
+              error,
+              httpStatus,
+            } satisfies QuoteMediaEnhancedFinancialsSection;
+          }
+
+          if (!hasQuoteMediaEnhancedReports(data)) {
+            return {
+              reportType: code,
+              label,
+              status: "skipped",
+              data,
+              params: reqParams,
+              error: `No ${label.toLowerCase()} reports returned`,
+              httpStatus,
+            } satisfies QuoteMediaEnhancedFinancialsSection;
+          }
+
+          return {
+            reportType: code,
+            label,
+            status: "fulfilled",
+            data,
+            params: reqParams,
+            httpStatus,
+          } satisfies QuoteMediaEnhancedFinancialsSection;
+        } catch (error) {
+          return {
+            reportType: code,
+            label,
+            status: code === "H" ? "skipped" : "failed",
+            data: null,
+            params: reqParams,
+            error: error instanceof Error ? error.message : "Unknown error",
+          } satisfies QuoteMediaEnhancedFinancialsSection;
+        }
+      })
+    );
+
+    const bundle: QuoteMediaEnhancedFinancialsBundle = {
+      type: QUOTEMEDIA_ENHANCED_FINANCIALS_BUNDLE_TYPE,
+      symbol,
+      sections,
+    };
+    const successfulSections = sections.filter(
+      (section) =>
+        section.status === "fulfilled" &&
+        hasQuoteMediaEnhancedReports(section.data)
+    );
+    const failedSections = sections.filter(
+      (section) => section.status === "failed"
+    );
+    const topLevelError =
+      successfulSections.length === 0 && failedSections.length > 0
+        ? `Enhanced Financials A/Q/H failed: ${failedSections
+            .map((section) => `${section.label} (${section.error})`)
+            .join(", ")}`
+        : undefined;
+
+    setTabs((prev) =>
+      prev.map((t) =>
+        t.id === tabId
+          ? {
+              ...t,
+              data: bundle,
+              error: topLevelError,
+              loading: false,
+              httpStatus:
+                topLevelError && failedSections[0]?.httpStatus
+                  ? failedSections[0].httpStatus
+                  : 200,
+            }
+          : t
+      )
+    );
   };
 
   const handleSelectTab = (id: string) => {
@@ -250,8 +473,18 @@ export default function Home() {
               values={paramValues}
               onChange={handleParamChange}
               onSubmit={handleFetchData}
-              loading={tabs.some((t) => t.loading)}
+              loading={anyLoading}
             />
+            {selectedCallId === "qm_enhanced_financials" && (
+              <button
+                type="button"
+                onClick={handleFetchAllEnhancedFinancials}
+                disabled={anyLoading}
+                className="w-full mt-3 bg-white border border-blue-200 text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors"
+              >
+                Fetch A/Q/H
+              </button>
+            )}
           </div>
         )}
       </aside>
@@ -387,6 +620,11 @@ export default function Home() {
                           .map((f) => `${f.ticker} (${f.error})`)
                           .join(", ")}
                       </div>
+                    )}
+                    {activeEnhancedBundle && (
+                      <EnhancedFinancialsBundleNotice
+                        bundle={activeEnhancedBundle}
+                      />
                     )}
                     <TableView data={activeTab.data} />
                   </div>

@@ -138,3 +138,89 @@ test("falls back to key value rows instead of returning header-only table data",
     ["results", "{\"companies\":[{\"reports\":[]}]}"],
   ]);
 });
+
+test("exports QuoteMedia company arrays returned by profile and fundamentals calls", () => {
+  const tables = detectTableData({
+    results: {
+      copyright: "Copyright (c) 2026 QuoteMedia, Inc.",
+      symbolcount: 1,
+      company: [
+        {
+          symbol: "MSFT",
+          longname: "Microsoft Corporation",
+          exchange: "NGS",
+        },
+      ],
+    },
+  });
+
+  assert.equal(tables.length, 1);
+  assert.equal(tables[0].title, "company");
+  assert.deepEqual(tables[0].headers, ["symbol", "longname", "exchange"]);
+  assert.deepEqual(tables[0].rows, [["MSFT", "Microsoft Corporation", "NGS"]]);
+});
+
+test("creates one Enhanced Financials table per available A/Q/H bundle section", () => {
+  const tables = detectTableData({
+    type: "quoteMediaEnhancedFinancialsBundle",
+    symbol: "POW:CA",
+    sections: [
+      {
+        reportType: "A",
+        label: "Annual",
+        status: "fulfilled",
+        data: {
+          results: {
+            companies: [
+              {
+                reports: [
+                  {
+                    reportDate: "2025-12-31",
+                    incomeStatement: { revenue: 100 },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+      {
+        reportType: "Q",
+        label: "Quarterly",
+        status: "fulfilled",
+        data: {
+          results: {
+            companies: [
+              {
+                reports: [
+                  {
+                    reportDate: "2026-03-31",
+                    balanceSheet: { totalAssets: 250 },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+      {
+        reportType: "H",
+        label: "Half-Yearly",
+        status: "skipped",
+        data: {
+          results: {
+            companies: [{ reports: [] }],
+          },
+        },
+      },
+    ],
+  });
+
+  assert.equal(tables.length, 2);
+  assert.equal(tables[0].title, "Annual");
+  assert.deepEqual(tables[0].headers, ["Statement | Metric", "2025-12-31"]);
+  assert.deepEqual(tables[0].rows, [["incomeStatement | revenue", 100]]);
+  assert.equal(tables[1].title, "Quarterly");
+  assert.deepEqual(tables[1].headers, ["Statement | Metric", "2026-03-31"]);
+  assert.deepEqual(tables[1].rows, [["balanceSheet | totalAssets", 250]]);
+});
