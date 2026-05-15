@@ -1,4 +1,8 @@
 import { PlatformDef } from "./types";
+import {
+  QUOTEMEDIA_ENHANCED_REPORT_TYPES,
+  QUOTEMEDIA_EXCHANGE_OPTIONS,
+} from "./quotemedia";
 
 export const PLATFORMS: PlatformDef[] = [
   {
@@ -25,9 +29,9 @@ export const PLATFORMS: PlatformDef[] = [
             label: "Report Type",
             default: "Q",
             type: "combo",
-            options: ["A", "Q"],
+            options: QUOTEMEDIA_ENHANCED_REPORT_TYPES.map((item) => item.code),
           },
-          { key: "number_of_reports", label: "Number of Reports", default: "20" },
+          { key: "number_of_reports", label: "Number of Reports", default: "300" },
         ],
       },
       {
@@ -214,14 +218,5 @@ export const PLATFORMS: PlatformDef[] = [
 ];
 
 export const EXCHANGE_OPTIONS = [
-  { value: "tsx", label: "TSX (Toronto)" },
-  { value: "tsxv", label: "TSXV (Venture)" },
-  { value: "nasdaq", label: "NASDAQ" },
-  { value: "nyse", label: "NYSE" },
-  { value: "amex", label: "AMEX" },
-  { value: "lse", label: "LSE (London)" },
-  { value: "asx", label: "ASX (Australia)" },
-  { value: "hkse", label: "HKSE (Hong Kong)" },
-  { value: "sse", label: "SSE (Shanghai)" },
-  { value: "nse", label: "NSE (India)" },
+  ...QUOTEMEDIA_EXCHANGE_OPTIONS,
 ];

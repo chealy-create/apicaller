@@ -1,3 +1,5 @@
+import { isQuoteMediaEnhancedFinancialsBundle } from "./quotemedia";
+
 export type CellValue = string | number | boolean | null;
 
 export interface TableData {
@@ -111,7 +113,10 @@ function arrayToTable(arr: unknown[], title?: string): TableData {
   return { title, headers, rows };
 }
 
-function enhancedFinancialsToTable(companies: unknown[]): TableData | null {
+function enhancedFinancialsToTable(
+  companies: unknown[],
+  title = "Financials"
+): TableData | null {
   const reportsByCompany = companies
     .map((company, index) => {
       if (!isRecord(company) || !Array.isArray(company.reports)) return null;
@@ -174,7 +179,7 @@ function enhancedFinancialsToTable(companies: unknown[]): TableData | null {
     ...dates.map((date) => values[date] ?? ""),
   ]);
 
-  return rows.length > 0 ? { title: "Financials", headers, rows } : null;
+  return rows.length > 0 ? { title, headers, rows } : null;
 }
 
 function unrollBrokerEstimates(brokers: unknown[]): TableData | null {
@@ -208,7 +213,13 @@ function unrollBrokerEstimates(brokers: unknown[]): TableData | null {
 
 function resultArrayTables(results: Record<string, unknown>): TableData[] {
   const tables: TableData[] = [];
-  const knownKeys = ["dividends", "earningsEvents", "estimates", "earningsEstimates"];
+  const knownKeys = [
+    "company",
+    "dividends",
+    "earningsEvents",
+    "estimates",
+    "earningsEstimates",
+  ];
 
   for (const key of knownKeys) {
     const val = results[key];
@@ -273,6 +284,26 @@ export function detectTableData(data: unknown): TableData[] {
   }
 
   const obj = data as Record<string, unknown>;
+
+  if (isQuoteMediaEnhancedFinancialsBundle(obj)) {
+    const tables = obj.sections.flatMap((section) => {
+      if (section.status === "failed" || !isRecord(section.data)) return [];
+
+      const sectionResults = isRecord(section.data.results)
+        ? section.data.results
+        : undefined;
+      const sectionCompanies = sectionResults?.companies;
+      if (!Array.isArray(sectionCompanies) || sectionCompanies.length === 0) {
+        return [];
+      }
+
+      const table = enhancedFinancialsToTable(sectionCompanies, section.label);
+      return table ? [table] : [];
+    });
+
+    return tables;
+  }
+
   const res = isRecord(obj.results) ? obj.results : undefined;
 
   const companies = res?.companies;

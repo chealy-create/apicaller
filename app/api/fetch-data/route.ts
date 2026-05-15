@@ -1,4 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  buildQuoteMediaEnhancedFinancialsParams,
+  buildQuoteMediaExchangeParams,
+  buildQuoteMediaProfileParams,
+  getQuoteMediaExchangeGroup,
+} from '@/lib/quotemedia';
 
 // Types for the request body
 interface FetchDataRequest {
@@ -81,7 +87,7 @@ async function handleQuoteMediaCall(
     case 'qm_enhanced_financials': {
       const symbol = params.symbol as string;
       const reportType = params.report_type as string;
-      const numberOfReports = params.number_of_reports as string || '20';
+      const numberOfReports = params.number_of_reports as string | undefined;
 
       if (!symbol || !reportType) {
         return NextResponse.json(
@@ -90,11 +96,11 @@ async function handleQuoteMediaCall(
         );
       }
 
-      const queryParams = new URLSearchParams({
+      const queryParams = buildQuoteMediaEnhancedFinancialsParams({
+        webmasterId,
         symbol,
-        report_type: reportType,
-        number_of_reports: numberOfReports,
-        webmaster_id: webmasterId,
+        reportType,
+        numberOfReports,
       });
       url = `https://quotes.quotemedia.com/v3/financials/enhanced?${queryParams}`;
       break;
@@ -132,10 +138,17 @@ async function handleQuoteMediaCall(
         );
       }
 
-      const queryParams = new URLSearchParams({
+      if (!getQuoteMediaExchangeGroup(exchangeGroup)) {
+        return NextResponse.json(
+          { error: `Unsupported QuoteMedia exchange group: ${exchangeGroup}` },
+          { status: 400 }
+        );
+      }
+
+      const queryParams = buildQuoteMediaExchangeParams(
         webmasterId,
-        exchangeGroup,
-      });
+        exchangeGroup
+      );
 
       url = `https://quotes.quotemedia.com/data/getFundamentalsMiniByExchange.json?${queryParams}`;
 
@@ -197,10 +210,7 @@ async function handleQuoteMediaCall(
         );
       }
 
-      const queryParams = new URLSearchParams({
-        webmasterId,
-        symbol,
-      });
+      const queryParams = buildQuoteMediaProfileParams(webmasterId, symbol);
 
       url = `https://app.quotemedia.com/data/getProfiles.json?${queryParams}`;
       break;
